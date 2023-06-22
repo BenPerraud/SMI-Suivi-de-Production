@@ -1,0 +1,42 @@
+.cardsProdFlex {
+    border: solid 3px #203864;
+    padding: 20px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+}
+
+.cardsProdDetails {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cardsProdFlexDesi {
+    font-size: 20px;
+    font-weight: bold;
+    color: #203864;
+}
+
+.cardsProdFlexProd {
+    display: flex;
+    flex-direction: row;
+}
+
+.cardsProdFlexProdElement {
+    width: 300px;
+    color: #203864;
+    font-size: 20px;
+}
+
+.validProd {
+    color: red;
+    font-weight: bold;
+}
+
+.cardsProdFlexProdElementTheo {
+    font-size: 15px;
+    font-style: italic;
+    color: #203864;
+}
