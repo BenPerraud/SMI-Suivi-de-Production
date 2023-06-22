@@ -8,7 +8,6 @@ function ModifyOperator () {
     const urlFetch = ["http://localhost:3000/api/operator/", params.id].join("")
 
     useEffect (() => {
-        console.log(7)
         fetch(urlFetch)
             .then(res => res.json())
             .then(operator => setOperator(operator))

@@ -39,14 +39,14 @@ function CreateProduction () {
         e.preventDefault()
 
         const dateInput = (document.getElementById("date").value).split("-")
-        const date = Date.parse(new Date(dateInput[0], dateInput[1], dateInput[2], 0, 0, 0))
+        console.log(dateInput)
+        const date = Date.parse(new Date(dateInput[0], dateInput[1]-1, dateInput[2], 0, 0, 0))
         console.log(date)
-
         const ope0 = document.getElementById("operator0").value
         const ope1 = document.getElementById("operator1").value
         const ope2 = document.getElementById("operator2").value
         const operators = [ope0, ope1, ope2]
-        const operator = operators.filter( ope => ope !== "")
+        const operator = operators.filter(Boolean)
 
         const h = Number(document.getElementById("heures").value)
         const m = Number(document.getElementById("minutes").value)
