@@ -1,6 +1,3 @@
-import "./createOperator.css"
-import "./modifyDeleteOperator"
-
 function CreateOperator ({formState, setFormState}) {
     
     function postOperator (e) {
@@ -23,19 +20,12 @@ function CreateOperator ({formState, setFormState}) {
     }
 
     return (
-        <div className="createOperator">
-            <h1 className="titleOperator">Ajouter un(e) opérateur/trice</h1>
-            <form name="createOperatorForm" method="post" encType="multipart/form-data" onSubmit={postOperator} className="formOperator">
+        <div className="rowGap20px">
+            <h1 className="titleH1">Ajouter un(e) opérateur/trice</h1>
+            <form className="form" name="form" method="post" encType="multipart/form-data" onSubmit={postOperator}>
                 <label>Prénom : <input className="formElement" type="text" name="firstname" /></label>
                 <label>Nom : <input className="formElement" type="text" name="name" /></label>
-                <label>Type de contrat : 
-                    <select className="formElement" name="contract">
-                        <option value="Permanent">Permanent</option>
-                        <option value="Interim">Interim</option>
-                        <option value="ESAT">ESAT</option>
-                    </select>
-                </label>
-                <button className="btnCreateOperator" type="submit">Ajouter à la base de données</button>
+                <button className="formBtn" type="submit">Ajouter à la base de données</button>
             </form>
         </div>
     )

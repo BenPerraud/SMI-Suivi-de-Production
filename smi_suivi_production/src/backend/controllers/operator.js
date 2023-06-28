@@ -12,7 +12,6 @@ exports.createOperator = (req, res) => {
                 const operator = new Operator ({
                     firstname: req.body.firstname,
                     name: req.body.name,
-                    contract: req.body.contract,
                 })
                 operator.save()  
                     .then(() => res.status(201).json("Un(e) nouvel(le) opérateur/trice a été ajouté(e) à la base de données"))
@@ -44,7 +43,6 @@ exports.modifyOneOperator = (req, res) => {
     Operator.updateOne({ _id: req.params.id}, {
         name: req.body.name,
         firstname: req.body.firstname,
-        contract: req.body.contract,
         _id: req.params.id})
         .then(() => res.status(201).json("Opérateur/trice modifié(e)"))
         .catch(error => res.status(400).json({ error }))

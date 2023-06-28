@@ -1,23 +1,14 @@
-import "./index.css"
-import CreateOperator from "./Operator/createOperator"
-import ModifyDeleteOperator from "./Operator/modifyDeleteOperator"
-import CreateProduction from "./Production/createProd"
-import CreatePi from "./Production/createPi" 
-import { useState } from "react"
+import OpeMonitoring from "./Operator/opeMonitoring"
+import ProdMonitoring from "./Production/prodMonitoring" 
 
-function ProdMonitoring () {
-    const [formState, setFormState] = useState(0)
+function ProdOpeMonitoring () {
 
     return (
-        <div>
-            <div className="operator">
-                <CreatePi />
-                <CreateProduction />
-                <CreateOperator formState={formState} setFormState={setFormState}/>
-                <ModifyDeleteOperator formState={formState} setFormState={setFormState}/>    
-            </div>
+        <div className="flexColumnGeneral">
+            <ProdMonitoring />
+            <OpeMonitoring />    
         </div>
     )
 }
 
-export default ProdMonitoring
+export default ProdOpeMonitoring

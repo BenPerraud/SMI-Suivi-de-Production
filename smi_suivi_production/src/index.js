@@ -5,8 +5,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Header from "../src/frontend/header/index"
 import DailyProd from "../src/frontend/pages/DailyProd/index"
 import Analyse from "../src/frontend/pages/Analyse/index"
-import ProdMonitoring from "../src/frontend/pages/ProdMonitoring/index"
-import ModifyOperator from './frontend/pages/ModifyOperator/modifyOperator';
+import ProdOpeMonitoring from "../src/frontend/pages/ProdMonitoring/index"
+import ModifyOperator from './frontend/pages/ModifyOperator/modifyOperator'
+import RedirectToToday from './frontend/pages/DailyProd/redirectToToday'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -16,9 +17,10 @@ root.render(
     <Router>
       <Header />
       <Routes>
-          <Route path='/' element={<DailyProd />} />
+          <Route path='/' element={<RedirectToToday />} />
+          <Route path='/date/:date' element={<DailyProd />} />
           <Route path='/Analyse' element={<Analyse />} />
-          <Route path='/Suivi-de-production' element={<ProdMonitoring />} />
+          <Route path='/Suivi-de-production' element={<ProdOpeMonitoring />} />
           <Route path='/Suivi-de-production/:id' element={<ModifyOperator />} />
       </Routes>
     </Router>

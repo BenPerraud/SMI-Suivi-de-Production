@@ -34,24 +34,16 @@ function ModifyOperator () {
     }
 
     return (
-        <div className="modify">
-            <h1 className="titleOperator">Modifier l'opérateur/trice suivant(e) : {operator.firstname} {operator.name} </h1>
-            <form name="modifyForm" encType="multipart/form-data" onSubmit={updateOperator} className="formOperator">
-                <label>Prénom : <input defaultValue={operator.firstname} className="formElement" type="text" name="firstname" /></label>
-                <label>Nom : <input defaultValue={operator.name} className="formElement" type="text" name="name" /></label>
-                <label>Type de contrat : 
-                    <select defaultValue={operator.contract} className="formElement" name="contract">
-                        <option value="Permanent">Permanent</option>
-                        <option value="Interim">Interim</option>
-                        <option value="ESAT">ESAT</option>
-                    </select>
-                </label>
-                <button className="btnCreateOperator" type="submit">Modifier</button>
+        <div className="flexColumnGeneral">
+            <h1 className="titleH1">Modifier l'opérateur/trice suivant(e) : {operator.firstname} {operator.name} </h1>
+            <form className="form" name="modifyForm" encType="multipart/form-data" onSubmit={updateOperator}>
+                <label>Prénom : <input className="formElement" defaultValue={operator.firstname} type="text" name="firstname" /></label>
+                <label>Nom : <input className="formElement" defaultValue={operator.name} type="text" name="name" /></label>
+                <button className="formBtn" type="submit">Modifier</button>
             </form>
             <NavLink className="navlink" to="/suivi-de-production">Retourner au Suivi de Production</NavLink>
         </div>
     )
-
 }
 
 export default ModifyOperator

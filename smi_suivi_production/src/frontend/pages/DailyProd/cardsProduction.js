@@ -1,4 +1,3 @@
-import "./cardsProduction.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
@@ -33,19 +32,19 @@ function CardsProduction ({production}) {
                 {chevron}
             </div>
             <div className="cardsProdFlexProd">
-                <div className="cardsProdFlexProdElement">Qte produite : {production.productionOfTheDay[0].quantityProd.toLocaleString()} pcs</div>
-                <div className="cardsProdFlexProdElement">Qte rebut : {production.productionOfTheDay[0].quantityWaste.toLocaleString()} pcs ({((production.productionOfTheDay[0].quantityWaste/production.productionOfTheDay[0].quantityProd)*100).toFixed(1)}%)</div>
-                <div className="cardsProdFlexProdElement validProd">Qte validée : {(production.productionOfTheDay[0].quantityProd-production.productionOfTheDay[0].quantityWaste).toLocaleString()} pcs</div>
-                <div className="cardsProdFlexProdElementTheo">(Qte théorique : {production.productionOfTheDay[0].quantityTheorical.toLocaleString()} pcs)</div>
+                <div className="cardsProdFlexProdElement">Qte produite : {production.quantityProd.toLocaleString()} pcs</div>
+                <div className="cardsProdFlexProdElement">Qte rebut : {production.quantityWaste.toLocaleString()} pcs ({((production.quantityWaste/production.quantityProd)*100).toFixed(1)}%)</div>
+                <div className="cardsProdFlexProdElement validProd">Qte validée : {(production.quantityProd-production.quantityWaste).toLocaleString()} pcs</div>
+                <div className="cardsProdFlexProdElementTheo">(Qte théorique : {production.quantityTheorical.toLocaleString()} pcs)</div>
             </div>
             <div className={isOpen ? "cardsProdFlexDetails"  : "closed"}>
                 <div className="cardsProdFlexDesi">Détails de la production :</div>
-                <div className="cardsDetailsElement">- Temps de production : {convertToHours(production.productionOfTheDay[0].prodTime)} (prod/h : {Math.trunc((production.productionOfTheDay[0].quantityProd/(production.production[0].prodTime/60))).toLocaleString()} pcs)</div>
+                <div className="cardsDetailsElement">- Temps de production : {convertToHours(production.prodTime)} (prod/h : {Math.trunc((production.quantityProd/(production.prodTime/60))).toLocaleString()} pcs)</div>
                 <div>
                     <div className="cardsDetailsElement">- Opérateur/trice :</div>
-                    {(arrayOperators(production.productionOfTheDay[0].operator)).map(operator => <div className="cardsProdFlexProdElementTheo padding" key={operator}>{operator}</div>)}
+                    {(arrayOperators(production.operator)).map(operator => <div className="cardsProdFlexProdElementTheo padding" key={operator}>{operator}</div>)}
                 </div>
-                <div className="cardsDetailsElement">- Commentaires : {production.productionOfTheDay[0].comments}</div>
+                <div className="cardsDetailsElement">- Commentaires : {production.comments}</div>
             </div>
         </div>
     )
