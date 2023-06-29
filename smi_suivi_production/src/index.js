@@ -8,6 +8,7 @@ import Analyse from "../src/frontend/pages/Analyse/index"
 import ProdOpeMonitoring from "../src/frontend/pages/ProdMonitoring/index"
 import ModifyOperator from './frontend/pages/ModifyOperator/modifyOperator'
 import RedirectToToday from './frontend/pages/DailyProd/redirectToToday'
+import Footer from "../src/frontend/footer/index"
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -23,6 +24,7 @@ root.render(
           <Route path='/Suivi-de-production' element={<ProdOpeMonitoring />} />
           <Route path='/Suivi-de-production/:id' element={<ModifyOperator />} />
       </Routes>
+      <Footer />
     </Router>
   </React.StrictMode>
 )

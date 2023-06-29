@@ -33,11 +33,31 @@ body {
   row-gap: 20px;
 }
 
+.rowGap15px {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  padding: 20px;
+}
+
 .titleH1 {
   color: #203864;
   font-size: 30px;
   margin: 0;
   text-decoration: underline;
+}
+
+.titleH2 {
+  width: fit-content;
+  color: #203864;
+  font-size: 20px;
+  margin: 0;
+  padding-left: 12px;
+  padding-right: 12px;
+  line-height: 150%;
+  background-color:#F7F7F7;
+  border: #203864 solid 2px;
+  border-radius: 25px;
 }
 
 .form {
@@ -69,6 +89,15 @@ body {
 
 .bold {
   font-weight: bold;
+}
+
+.lineChart {
+  display: flex;
+  justify-content: center;
+}
+
+.lineChartElement {
+  width: 1200px;
 }
 
 

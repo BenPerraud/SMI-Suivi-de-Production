@@ -70,7 +70,7 @@ function DailyProd () {
         <div className="flexColumnGeneral">
             <h1 className="titleH1">Production du jour : </h1>
             <form>
-                <label>Date : <input onChange={formDate} className="formElement widthDate" type="date" id="date" defaultValue={today} /></label>
+                <label className="cardsOperatorElement bold">Date : <input onChange={formDate} className="formElement widthDate" type="date" id="date" defaultValue={today} /></label>
             </form>
             <div className="rowGap20px">
                 {productions.map(production => <CardsProduction production={production} key={production._id}/>)}
