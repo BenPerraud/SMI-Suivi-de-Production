@@ -87,19 +87,3 @@
     border-color: #203864;
 }
 
-.red {
-    background-color: #c73819;
-    color: white;
-    font-weight: bold;
-    border: none
-}
-
-.navLinkModify {
-    border: #203864 solid 2px;
-    border-radius: 25px;
-    text-align: center;
-    background-color: #DCDCDC;
-    text-decoration: none;
-    color: #203864;
-}
-

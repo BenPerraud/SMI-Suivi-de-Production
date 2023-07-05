@@ -18,7 +18,6 @@ function ModifyOperator () {
         e.preventDefault()
         const form = e.target
         const formData = new FormData(form)
-        console.log(formData)
 
         if (formData.get("name") === "") {
             alert("Veuillez renseigner le nom")

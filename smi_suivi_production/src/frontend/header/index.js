@@ -11,9 +11,10 @@ function Header () {
         <div className="navBar">
             <NavLink to="/"><img src={smi_logo} alt="Logo de SMI"></img></NavLink>
             <div className="navBar_link">
-                <NavLink to={todayURL} className={currentLocation.pathname === todayURL ? "navBar_link_element_current" : "navBar_link_element" }>Production du jour</NavLink>
+                <NavLink to={todayURL} className={currentLocation.pathname === todayURL ? "navBar_link_element_current" : "navBar_link_element" }>Production de la veille</NavLink>
                 <NavLink to="/Analyse" className={currentLocation.pathname === "/Analyse" ? "navBar_link_element_current" : "navBar_link_element" }>Analyse</NavLink>
-                <NavLink to="/Suivi-de-production" className={currentLocation.pathname === "/Suivi-de-production" ? "navBar_link_element_current" : "navBar_link_element" }>Suivi de production</NavLink> 
+                <NavLink to="/Ajouter-un-Pi" className={currentLocation.pathname === "/Ajouter-un-Pi" ? "navBar_link_element_current" : "navBar_link_element" }>Ajouter un Pi</NavLink>
+                <NavLink to="/Ajouter-une-production" className={currentLocation.pathname === "/Ajouter-une-production" ? "navBar_link_element_current" : "navBar_link_element" }>Ajouter une production</NavLink> 
             </div>
         </div>
     )

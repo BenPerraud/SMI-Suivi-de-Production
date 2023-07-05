@@ -10,7 +10,7 @@ function dateOfTheDay () {
         }}
     
     function dateDay () {
-        const day = date.getDate()
+        const day = date.getDate()-1
         if (day < 10) {
             return String("0"+day)
         }else {

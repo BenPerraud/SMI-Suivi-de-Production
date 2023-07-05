@@ -1,4 +1,3 @@
-import "./index.css"
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import dateOfTheDay from "../../components/dateOfTheDay"
@@ -23,12 +22,12 @@ function DailyProd () {
                     pi: i.pi,
                     client: i.client,
                     designation: i.designation,
+                    quantityTheorical: i.quantityTheorical,
                     comments: j.comments,
                     date: j.date,
                     prodTime: j.prodTime,
                     operator: j.operator,
                     quantityProd: j.quantityProd,
-                    quantityTheorical: j.quantityTheorical,
                     quantityWaste: j.quantityWaste,
                     _id: j._id
                 }
