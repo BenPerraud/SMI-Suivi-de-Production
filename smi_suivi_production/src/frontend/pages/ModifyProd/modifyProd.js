@@ -108,7 +108,11 @@ function ModifyProd () {
             if (value === "") {
                 alert("Un des champs du questionnaire n'est pas rempli")
                 break
-            } else {
+            } else { 
+                if( operator.length > new Set(operator).size) {
+                    alert("Un(e) opérateur/trice a été renseigné au moins deux fois, veuillez recommencer.")
+                    break
+                } else {
                 fetch("http://localhost:3000/api/production/"+params.pi+"/"+params._id, {method: 'PUT', body: formData})
                     .then(res => res.json())
                     .then(res => alert(res+params.pi))
@@ -116,6 +120,7 @@ function ModifyProd () {
                 form.reset()
                 navigate("/")
                 break
+                }
             }
         }
     }

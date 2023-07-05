@@ -26,7 +26,7 @@ root.render(
           <Route path='/Analyse' element={<Analyse />} />
           <Route path='Ajouter-un-Pi' element={<AddPi />} />
           <Route path='/Ajouter-une-production' element={<ProdMonitoring />} />
-          <Route path='/Suivi-de-production/:id' element={<ModifyOperator />} />
+          <Route path='/Modifier-un-operateur/:id' element={<ModifyOperator />} />
       </Routes>
       <Footer />
     </Router>

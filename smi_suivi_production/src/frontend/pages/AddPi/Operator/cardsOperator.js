@@ -1,9 +1,9 @@
 import DeleteOperator from "./deleteOperator"
 import { NavLink } from "react-router-dom"
-import "./../index.css"
+import "./../../AddProduction/index.css"
 
 function CardsOperator (x, {formState, setFormState}) {
-    const urlModify = ["/Suivi-de-production/", x._id].join("")
+    const urlModify = ["/Modifier-un-operateur/", x._id].join("")
     return (
         <div key={x._id} className="cards">
             <div className="cardsOperator">

@@ -4,7 +4,7 @@ import "./index.css"
 
 function Header () {
     const date= new Date()
-    const today = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)
+    const today = new Date(date.getFullYear(), date.getMonth(), date.getDate()-1, 0, 0, 0)
     const todayURL = "/date/"+today.getTime()
     const currentLocation = useLocation()
     return (
