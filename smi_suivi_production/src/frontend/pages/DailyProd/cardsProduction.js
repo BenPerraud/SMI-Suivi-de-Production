@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { useState } from "react"
+import { NavLink } from 'react-router-dom'
+import "./index.css"
 
 function CardsProduction ({production}) {
     const [isOpen, setIsOpen] = useState(false)
@@ -23,7 +25,7 @@ function CardsProduction ({production}) {
     }
 
     const chevron = (isOpen ? <FontAwesomeIcon onClick={() => handleChange()} className="chevron" icon={faChevronDown} /> : <FontAwesomeIcon onClick={() => handleChange()} className="chevron" icon={faChevronUp} />)
-    
+    const urlModify = production.pi+"/"+production._id
     
     return (
         <div key={production._id} className="cardsProdFlex">
@@ -45,6 +47,7 @@ function CardsProduction ({production}) {
                     {(arrayOperators(production.operator)).map(operator => <div className="cardsProdFlexProdElementTheo padding" key={operator}>{operator}</div>)}
                 </div>
                 <div className="cardsDetailsElement">- Commentaires : {production.comments}</div>
+                <NavLink to={urlModify} className="navLinkModify">Modifier</NavLink>
             </div>
         </div>
     )

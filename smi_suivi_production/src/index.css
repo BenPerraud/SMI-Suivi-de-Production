@@ -45,6 +45,7 @@ body {
   font-size: 30px;
   margin: 0;
   text-decoration: underline;
+  line-height: 110%;
 }
 
 .titleH2 {
@@ -98,6 +99,27 @@ body {
 
 .lineChartElement {
   width: 1200px;
+}
+
+.closed {
+  display: none;
+}
+
+.navLinkModify {
+  border: #203864 solid 2px;
+  border-radius: 25px;
+  text-align: center;
+  background-color: #DCDCDC;
+  text-decoration: none;
+  color: #203864;
+  width: 100px;
+}
+
+.red {
+  background-color: #c73819;
+  color: white;
+  font-weight: bold;
+  border: none
 }
 
 

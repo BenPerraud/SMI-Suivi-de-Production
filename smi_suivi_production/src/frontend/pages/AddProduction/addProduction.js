@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import "./index.css"
 
 function AddProduction ({pi, client, designation, setCount}) {
     const [operators, setOperators] = useState([])
@@ -23,14 +24,14 @@ function AddProduction ({pi, client, designation, setCount}) {
         }}
     
     function dayMonth () {
-        const day = date.getDate()
+        const day = date.getDate()-1
         if (day < 10) {
             return String("0"+day)
         }else {
             return day
         }}
 
-    const today = [date.getFullYear(), dateMonth(), dayMonth()].join("-")
+    const yesterday = [date.getFullYear(), dateMonth(), dayMonth()].join("-")
 
     /* Fonction appelée pour envoi du questionnaire */
     function postProduction (e) {
@@ -56,16 +57,14 @@ function AddProduction ({pi, client, designation, setCount}) {
         formData.append("prodTime", totTimeProd)
         formData.append("operator", operator)
 
-        const piInput = formData.get("pi")
-
         for (let value of formData.values()) {
             if (value === "") {
                 alert("Un des champs du questionnaire n'est pas rempli")
                 break
             } else {
-                fetch("http://localhost:3000/api/production/"+piInput, {method: 'POST', body: formData})
+                fetch("http://localhost:3000/api/production/"+pi, {method: 'POST', body: formData})
                     .then(res => res.json())
-                    .then(res => alert(res+piInput))
+                    .then(res => alert(res+pi))
                     .catch(error => alert("Erreur : " + error))
                 form.reset()
                 setCount(0)
@@ -78,10 +77,7 @@ function AddProduction ({pi, client, designation, setCount}) {
         <div className="rowGap20px">
             <h1 className="titleH1">Etape 2 : ajouter une nouvelle production au PI suivant : {pi} / {client} / {designation}</h1>
             <form className="form" name="createOperatorForm" method="post" encType="multipart/form-data" onSubmit={postProduction}>
-                <label>PI : <input className="formElement widthPi" type="text" name="pi" defaultValue={pi}/></label>
-                <label>Client : <input className="formElement widthClient" type="text" name="client" defaultValue={client}/></label>
-                <label>Désignation projet : <input className="formElement widthDesignation" type="text" name="designation" defaultValue={designation}/></label>
-                <label>Date : <input className="formElement widthDate" type="date" id="date" defaultValue={today} /></label>
+                <label>Date : <input className="formElement widthDate" type="date" id="date" defaultValue={yesterday} /></label>
                 <label>Opérateur/trice #1 : 
                     <select className="formElement widthOperator" type="text" id="operator0">
                         <option value=""> -- Choisir un(e) opérateur/trice -- </option>
@@ -101,7 +97,6 @@ function AddProduction ({pi, client, designation, setCount}) {
                     </select>
                 </label>
                 <label>Temps de production : <input className="formElement widthTimeProd" type="number" id="heures"/> heures et <input className="formElement widthTimeProd" type="number" id="minutes"/> minutes</label>
-                <label>Quantité théorique : <input className="formElement widthProdTheo" type="text" name="quantityTheorical" /> pièces théoriques sur base 7 heures</label>
                 <label>Quantité produite : <input className="formElement widthProdQuantity" type="text" name="quantityProd" /></label>
                 <label>Quantité rebut : <input className="formElement widthProdWaste" type="text" name="quantityWaste" /></label>
                 <label>Commentaires : <input id="formComments" className="formElement widthComments" type="text" name="comments" defaultValue="Pas de commentaires"/></label>
