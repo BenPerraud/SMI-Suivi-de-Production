@@ -1,11 +1,12 @@
 import "./modifyOperator.css"
-import { NavLink, useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 function ModifyOperator () {
     const [operator, setOperator] = useState([])
     const params = useParams()
     const urlFetch = ["http://localhost:3000/api/operator/", params.id].join("")
+    const navigate = useNavigate()
 
     useEffect (() => {
         fetch(urlFetch)
@@ -30,6 +31,7 @@ function ModifyOperator () {
                         .catch(error => alert("Erreur : " + error))
                 }
         form.reset()
+        navigate("/")
     }
 
     return (
@@ -40,7 +42,6 @@ function ModifyOperator () {
                 <label>Nom : <input className="formElement" defaultValue={operator.name} type="text" name="name" /></label>
                 <button className="formBtn" type="submit">Modifier</button>
             </form>
-            <NavLink className="navlink" to="/suivi-de-production">Retourner au Suivi de Production</NavLink>
         </div>
     )
 }

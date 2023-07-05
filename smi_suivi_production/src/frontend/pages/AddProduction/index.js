@@ -44,5 +44,3 @@ function ProdMonitoring () {
 }
 
 export default ProdMonitoring
-
-/* (alert("Le PI renseigné n'existe pas"), window.location.reload(false)) */

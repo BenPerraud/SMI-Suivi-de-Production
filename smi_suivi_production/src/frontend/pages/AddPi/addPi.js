@@ -1,3 +1,5 @@
+import OpeMonitoring from "./Operator/opeMonitoring"
+
 function AddPi () {
     
     function createPi (e) {
@@ -33,6 +35,7 @@ function AddPi () {
                     <button className="formBtn" type="submit">Ajouter à la base de données</button>
                 </form>
             </div>
+            <OpeMonitoring />
         </div>
     )
 }

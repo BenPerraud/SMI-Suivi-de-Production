@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import dateOfTheDay from "../../components/dateOfTheDay"
+import defaultDate from "../../components/defaultDate"
 import CardsProduction from "./cardsProduction.js"
 
 
@@ -36,8 +36,6 @@ function DailyProd () {
         }
         return newProd
     }
-
-    const today = dateOfTheDay()
     
     /* Fonction pour renvoyer sur une nouvelle page au changement du form */
     const navigate = useNavigate()
@@ -54,9 +52,9 @@ function DailyProd () {
         setdateURL(date)
     }
 
-    /* Fonction fetch pour récupérer les productions et les modifier avec uniquement les produtions du jour */
+    /* Fonction fetch pour récupérer les productions et les modifier avec uniquement les productions du jour */
     const [productions, setProductions] = useState([])
-
+    
     useEffect(() => {
         const reqDate = parseInt(dateURL)
         fetch("http://localhost:3000/api/production/date/"+dateURL)
@@ -69,7 +67,7 @@ function DailyProd () {
         <div className="flexColumnGeneral">
             <h1 className="titleH1">Production du jour : </h1>
             <form>
-                <label className="cardsOperatorElement bold">Date : <input onChange={formDate} className="formElement widthDate" type="date" id="date" defaultValue={today} /></label>
+                <label className="cardsOperatorElement bold">Date : <input onChange={formDate} className="formElement widthDate" type="date" id="date" defaultValue={defaultDate()} /></label>
             </form>
             <div className="rowGap20px">
                 {productions.map(production => <CardsProduction production={production} key={production._id}/>)}
