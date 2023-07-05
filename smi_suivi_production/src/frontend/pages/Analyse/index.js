@@ -1,14 +1,27 @@
 import "./index.css"
 import { useState } from "react"
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, ResponsiveContainer, Tooltip } from "recharts"
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts"
+import CustomTooltipCadence from "./tooltipCadence"
+import CustomTooltipWaste from "./tooltipWaste"
+import CustomTooltipTrs from "./tooltipTrs"
 
 
 function Analyse () {
     const [productions, setProductions] = useState([])
-    const [formattedProd, setFormattedProd] = useState([])
-   
+    const [prodDesignation, setProdDesignation] = useState({})
+
     function formatDatas (x) {
         try {
+            /* On crée un objet avec les identifiants de la production */
+            const newObject = {
+                client: x.client,
+                pi: x.pi,
+                designation: x.designation,
+                quantityTheorical: x.quantityTheorical,
+            }
+            setProdDesignation(newObject)
+
+            /* On crée un objet avec toutes les productions /*/
             const formattedProd = []
             for (let i of x.production) {
                 /* Bloc des dates */
@@ -27,12 +40,12 @@ function Analyse () {
                     }else {
                         return day
                     }}
-
+    
                 const date = new Date(i.date)
                 const dateProd = [dateDay(date.getDate()), dateMonth(date.getMonth()), date.getFullYear()-2000].join("/")
                 
                 const arrayOperator = i.operator[0].split(",")
-
+    
                 const newProdObject = {
                     date: dateProd,
                     dateTime: date,
@@ -42,15 +55,17 @@ function Analyse () {
                     taux_de_rebut: (i.quantityWaste/i.quantityProd)*100,
                     temps_production: i.prodTime,
                     opérateur: arrayOperator,
-                    trsTheorique_min: i.quantityTheorical/420,
-                    trs_min: (i.quantityProd-i.quantityWaste)/i.prodTime,
-                    commentaires: i.comments
+                    cadenceTheorique_heure: x.quantityTheorical/7,
+                    cadenceReelle_heure: (i.quantityProd-i.quantityWaste)/(i.prodTime/60),
+                    commentaires: i.comments,
+                    trs: ((i.quantityProd-i.quantityWaste)/(i.prodTime/60))/(x.quantityTheorical/7)*100,
+                    trs_max: 100
                 }
                 formattedProd.push(newProdObject)
             }
-
+    
             formattedProd.sort((a, b) => a.dateTime - b.dateTime)
-            return formattedProd
+            return setProductions(formattedProd)
         } catch (err) {
             alert("Le PI renseigné n'existe pas")
             window.location.reload(false)
@@ -65,52 +80,14 @@ function Analyse () {
 
         fetch("http://localhost:3000/api/production/"+piInput)
             .then(res => res.json())
-            .then(res => setProductions(res))
-            .catch(error => alert( error ))
-
-        fetch("http://localhost:3000/api/production/"+piInput)
-            .then(res => res.json())
-            .then(res => setFormattedProd(formatDatas(res)))
+            .then(res => formatDatas(res))
             .catch(error => alert( error ))
         
             form.reset()
     }
-    
 
     const toPercent = (decimal) => `${(decimal).toFixed(1)}%`
     
-    function CustomTooltipWaste ({active, label, payload}) {
-        if (active) {
-            return (
-                <div className="tooltip">
-                    <p className="tooltipElement bold" >{label}</p>
-                    <p className="tooltipElement">{`Taux de rebut : ${(payload[0].value).toFixed(1)}%`}</p>
-                    <p className="tooltipElement">Opérateur/trice :</p>
-                    <ul className="tooltipList">
-                        {(payload[1].value).map(ope => <li className="tooltipElementList" key={ope}>{ope}</li>)}
-                    </ul>
-                    <p className="tooltipElement">Commentaires :</p>
-                    <ul className="tooltipList">
-                        <li className="tooltipElementList">{payload[2].value}</li>
-                    </ul>
-                </div>
-            )
-        }
-        return null
-    }
-
-    function CustomTooltipTrs ({active, label, payload}) {
-        if (active) {
-            return (
-                <div className="tooltip">
-                    <p className="tooltipElement bold" >{label}</p>
-                    <p className="tooltipElement">{`TRS observé : ${(payload[0].value).toFixed(0)} pcs/min`}</p>
-                    <p className="tooltipElement">{`TRS théorique : ${(payload[1].value).toFixed(0)} pcs/min`}</p>
-                </div>
-            )
-        }
-        return null
-    }
 
 
     return (
@@ -123,12 +100,12 @@ function Analyse () {
                 </form>
             </div>
             <div className={productions.length === 0 ? "closed" : "rowGap20px"}>
-                <h1 className="titleH1">Etape 2 : Analyse du produit {productions.pi} / {productions.client} / {productions.designation}</h1>
+                <h1 className="titleH1">Etape 2 : Analyse du produit {prodDesignation.pi} / {prodDesignation.client} / {prodDesignation.designation}</h1>
                 <div className="rowGap15px">
                     <h2 className="titleH2">Taux de rebut</h2>
                     <div className="lineChart">
                         <ResponsiveContainer width="100%" height={400}>
-                            <LineChart data={formattedProd}>
+                            <LineChart data={productions}>
                                 <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
                                 <YAxis tickFormatter={toPercent}/>
                                 <XAxis dataKey="date" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
@@ -141,15 +118,34 @@ function Analyse () {
                     </div>
                 </div>
                 <div className="rowGap15px">
-                    <h2 className="titleH2">TRS à la minute</h2>
+                    <h2 className="titleH2">Cadence à l'heure (hors rebuts)</h2>
                     <div className="lineChart">
                         <ResponsiveContainer width="100%" height={400}>
-                            <LineChart data={formattedProd}>
+                            <LineChart data={productions}>
                                 <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
                                 <YAxis />
                                 <XAxis dataKey="date" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
-                                <Line type="monotone" dataKey="trs_min" stroke="#203864" strokeWidth={2}/>
-                                <Line type="monotone" dataKey="trsTheorique_min" stroke="#882e3d" strokeWidth={2}/>
+                                <Line type="monotone" dataKey="cadenceReelle_heure" stroke="#203864" strokeWidth={2}/>
+                                <Line type="monotone" dataKey="cadenceTheorique_heure" stroke="#882e3d" strokeWidth={2}/>
+                                <Tooltip content={<CustomTooltipCadence />} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+                <div className="rowGap15px">
+                    <h2 className="titleH2">TRS</h2>
+                    <div className="lineChart">
+                        <ResponsiveContainer width="100%" height={400}>
+                            <LineChart data={productions}>
+                                <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
+                                <YAxis yAxisId="left" tickFormatter={toPercent} />
+                                <YAxis yAxisId="right" orientation="right" style={{display: "none"}}/>
+                                <XAxis dataKey="date" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
+                                <Line yAxisId="left" type="monotone" dataKey="trs" stroke="#203864" strokeWidth={2}/>
+                                <Line yAxisId="left" type="monotone" dataKey="trs_max" stroke="#882e3d" strokeWidth={2}/>
+                                <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="cadenceReelle_heure" activeDot={0}/>
+                                <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="cadenceTheorique_heure" activeDot={0}/>
+                                <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="taux_de_rebut" activeDot={0}/>
                                 <Tooltip content={<CustomTooltipTrs />} />
                             </LineChart>
                         </ResponsiveContainer>
