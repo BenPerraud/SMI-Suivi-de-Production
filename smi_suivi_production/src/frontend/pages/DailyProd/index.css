@@ -71,3 +71,23 @@
 .padding {
     padding-left: 25px;
 }
+
+.trsDailyFlex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.trsDaily {
+    background-color: #F7F7F7;
+    color: #203864;
+    text-decoration: none;
+    line-height: 110%;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 25px;
+    border: #203864 solid 3px;
+    font-weight: bold;
+    font-size: 25px;
+}

@@ -107,11 +107,12 @@ function Analyse () {
                         <ResponsiveContainer width="100%" height={400}>
                             <LineChart data={productions}>
                                 <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
-                                <YAxis tickFormatter={toPercent}/>
+                                <YAxis yAxisId="left" tickFormatter={toPercent} />
+                                <YAxis yAxisId="right" orientation="right" hide={true}/>
                                 <XAxis dataKey="date" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
-                                <Line type="monotone" dataKey="taux_de_rebut" stroke="#203864" strokeWidth={2}/>
-                                <Line style={{display: "none"}} type="monotone" dataKey="opérateur"/>
-                                <Line style={{display: "none"}} type="monotone" dataKey="commentaires"/>
+                                <Line yAxisId="left" type="monotone" dataKey="taux_de_rebut" stroke="#203864" strokeWidth={2}/>
+                                <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="opérateur"/>
+                                <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="commentaires"/>
                                 <Tooltip content={<CustomTooltipWaste />}/>
                             </LineChart>
                         </ResponsiveContainer>
@@ -139,7 +140,7 @@ function Analyse () {
                             <LineChart data={productions}>
                                 <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
                                 <YAxis yAxisId="left" tickFormatter={toPercent} />
-                                <YAxis yAxisId="right" orientation="right" style={{display: "none"}}/>
+                                <YAxis yAxisId="right" orientation="right" hide={true}/>
                                 <XAxis dataKey="date" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
                                 <Line yAxisId="left" type="monotone" dataKey="trs" stroke="#203864" strokeWidth={2}/>
                                 <Line yAxisId="left" type="monotone" dataKey="trs_max" stroke="#882e3d" strokeWidth={2}/>

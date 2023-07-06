@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import defaultDate from "../../components/defaultDate"
 import CardsProduction from "./cardsProduction.js"
+import TrsDaily from "./trsDaily"
 
 
 function DailyProd () {
@@ -62,10 +63,14 @@ function DailyProd () {
             .then(res => setProductions(createNewObjectProd(createDayProd(res, reqDate))))
             .catch(error => alert("Erreur : " + error))
     }, [dateURL])
+    
 
     return (
-        <div className="flexColumnGeneral">
-            <h1 className="titleH1">Production du jour : </h1>
+        <div className="flexColumnGeneral rowGap20px">
+            <div className="trsDailyFlex">
+                <h1 className="titleH1">Production de la journée : </h1>
+                <TrsDaily productions={productions}/>
+            </div>
             <form>
                 <label className="cardsOperatorElement bold">Date : <input onChange={formDate} className="formElement widthDate" type="date" id="date" defaultValue={defaultDate()} /></label>
             </form>

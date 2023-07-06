@@ -105,21 +105,26 @@ function ModifyProd () {
         formData.append("operator", operator)
         
         for (let value of formData.values()) {    
-            if (value === "") {
-                alert("Un des champs du questionnaire n'est pas rempli")
+            if (h === 0 || m === 0) {
+                alert("Les heures ou les minutes ne sont pas renseignées, veuillez recommencer")
                 break
-            } else { 
-                if( operator.length > new Set(operator).size) {
-                    alert("Un(e) opérateur/trice a été renseigné au moins deux fois, veuillez recommencer.")
+            } else {
+                if (value === "") {
+                    alert("Un des champs du questionnaire n'est pas rempli")
                     break
-                } else {
-                fetch("http://localhost:3000/api/production/"+params.pi+"/"+params._id, {method: 'PUT', body: formData})
-                    .then(res => res.json())
-                    .then(res => alert(res+params.pi))
-                    .catch(error => alert("Erreur : " + error))
-                form.reset()
-                navigate("/")
-                break
+                } else { 
+                    if( operator.length > new Set(operator).size) {
+                        alert("Un(e) opérateur/trice a été renseigné au moins deux fois, veuillez recommencer.")
+                        break
+                    } else {
+                    fetch("http://localhost:3000/api/production/"+params.pi+"/"+params._id, {method: 'PUT', body: formData})
+                        .then(res => res.json())
+                        .then(res => alert(res+params.pi))
+                        .catch(error => alert("Erreur : " + error))
+                    form.reset()
+                    navigate("/")
+                    break
+                    }
                 }
             }
         }

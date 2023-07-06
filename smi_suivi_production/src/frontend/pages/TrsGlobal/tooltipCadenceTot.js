@@ -1,6 +1,6 @@
-import numStr from "../../components/numStr"
+import numStr from "./../../components/numStr"
 
-function CustomTooltipCadence ({active, label, payload}) {
+function CustomTooltipCadenceTot ({active, label, payload}) {
     if (active) {
         return (
             <div className="tooltip">
@@ -13,4 +13,4 @@ function CustomTooltipCadence ({active, label, payload}) {
     return null
 }
 
-export default CustomTooltipCadence
+export default CustomTooltipCadenceTot
