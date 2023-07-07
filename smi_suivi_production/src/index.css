@@ -122,4 +122,39 @@ body {
   border: none
 }
 
+.formDate {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  color: #203864;
+  font-size: 20px;
+}
+
+.formDateFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: solid 3px #203864;
+  border-radius: 25px;
+  padding: 20px;
+  align-items: center;
+}
+
+.reinitiate {
+  border-radius: 25px;
+  text-align: center;
+  background-color: #DCDCDC;
+  text-decoration: none;
+  color: #203864;
+  height: 45px;
+  font-size: 15px;
+  padding: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #c73819;
+  color: white;
+  font-weight: bold;
+  border: none
+}
+
 

@@ -3,9 +3,28 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tool
 import CustomTooltipWasteTot from "./tooltipWasteTot"
 import CustomTooltipTrsTot from "./tooltipTrsTot"
 import CustomTooltipCadenceTot from "./tooltipCadenceTot"
+import convertDateFormToTime from "../../components/convertDateFormtoTime"
 
 function TrsGlobal () {
     const [trs, setTrs] = useState({})
+    const [trsCopy, setTrsCopy] = useState ({})
+
+    function getDate (e) {
+        e.preventDefault()
+
+        const firstDateInput = convertDateFormToTime(document.getElementById("dateBegin").value)
+        const lastDateInput = convertDateFormToTime(document.getElementById("dateEnd").value)
+        
+        const result = trs.filter(element => element.date >= firstDateInput && element.date <= lastDateInput)
+        setTrs(result)
+    }
+
+    function reinitiate () {
+        setTrs(trsCopy)
+        document.getElementById('formDate').reset()
+    }
+
+    
 
     function formatDatas (x) {
         /* On crée un tableau avec toutes les productions */
@@ -79,6 +98,7 @@ function TrsGlobal () {
             result.push(objectFormatted)
             result.sort((a, b) => a.date - b.date)
         }
+        setTrsCopy(result)
         return result
     }
 
@@ -93,49 +113,59 @@ function TrsGlobal () {
 
     return (
         <div className="flexColumnGeneral">
-        <h1 className="titleH1">Analyse globale de toutes les productions cumulées</h1>
-            <div className="rowGap15px">
-                <h2 className="titleH2">Taux de rebut global</h2>
-                <div className="lineChart">
-                    <ResponsiveContainer width="100%" height={400}>
-                        <LineChart data={trs}>
-                            <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
-                            <XAxis dataKey="dateProd" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
-                            <YAxis yAxisId="left" tickFormatter={toPercent}/>
-                            <Line yAxisId="left" type="monotone" dataKey="tauxRebutTot" stroke="#203864" strokeWidth={2}/>
-                            <Tooltip content={<CustomTooltipWasteTot />} />
-                        </LineChart>
-                    </ResponsiveContainer>
+            <div className="rowGap20px">
+                <h1 className="titleH1">Analyse globale de toutes les productions cumulées</h1>
+                <div className="formDateFlex">
+                    <form className="formDate" id="formDate" onSubmit={getDate}>
+                        <label>Date de début : <input className="formElement widthDate" type="date" id="dateBegin" /></label>
+                        <label>Date de fin : <input className="formElement widthDate" type="date" id="dateEnd" /></label>
+                        <button className="formBtn" type="submit">Filtrer selon les dates</button>
+                    </form>
+                    <button className="reinitiate" onClick={reinitiate}>Réinitialiser les dates</button>
                 </div>
-            </div>
-            <div className="rowGap15px">
-                <h2 className="titleH2">Cadence globale par heure (hors rebuts)</h2>
-                <div className="lineChart">
-                    <ResponsiveContainer width="100%" height={400}>
-                        <LineChart data={trs}>
-                            <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
-                            <XAxis dataKey="dateProd" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
-                            <YAxis yAxisId="left"/>
-                            <Line yAxisId="left" type="monotone" dataKey="cadenceRealTot" stroke="#203864" strokeWidth={2}/>
-                            <Line yAxisId="left" type="monotone" dataKey="cadenceTheoTot" stroke="#882e3d" strokeWidth={2}/>
-                            <Tooltip content={<CustomTooltipCadenceTot />} />
-                        </LineChart>
-                    </ResponsiveContainer>
+                <div className="rowGap15px">
+                    <h2 className="titleH2">Taux de rebut global</h2>
+                    <div className="lineChart">
+                        <ResponsiveContainer width="100%" height={400}>
+                            <LineChart data={trs}>
+                                <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
+                                <XAxis dataKey="dateProd" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
+                                <YAxis yAxisId="left" tickFormatter={toPercent}/>
+                                <Line yAxisId="left" type="monotone" dataKey="tauxRebutTot" stroke="#203864" strokeWidth={2}/>
+                                <Tooltip content={<CustomTooltipWasteTot />} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
-            </div>
-            <div className="rowGap15px">
-                <h2 className="titleH2">TRS global</h2>
-                <div className="lineChart">
-                    <ResponsiveContainer width="100%" height={400}>
-                        <LineChart data={trs}>
-                            <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
-                            <XAxis dataKey="dateProd" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
-                            <YAxis yAxisId="left" tickFormatter={toPercent}/>
-                            <Line yAxisId="left" type="monotone" dataKey="trsTot" stroke="#203864" strokeWidth={2}/>
-                            <Line yAxisId="left" type="monotone" dataKey="trsTheoTot" stroke="#882e3d" strokeWidth={2}/>
-                            <Tooltip content={<CustomTooltipTrsTot />} />
-                        </LineChart>
-                    </ResponsiveContainer>
+                <div className="rowGap15px">
+                    <h2 className="titleH2">Cadence globale par heure (hors rebuts)</h2>
+                    <div className="lineChart">
+                        <ResponsiveContainer width="100%" height={400}>
+                            <LineChart data={trs}>
+                                <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
+                                <XAxis dataKey="dateProd" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
+                                <YAxis yAxisId="left"/>
+                                <Line yAxisId="left" type="monotone" dataKey="cadenceRealTot" stroke="#203864" strokeWidth={2}/>
+                                <Line yAxisId="left" type="monotone" dataKey="cadenceTheoTot" stroke="#882e3d" strokeWidth={2}/>
+                                <Tooltip content={<CustomTooltipCadenceTot />} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+                <div className="rowGap15px">
+                    <h2 className="titleH2">TRS global</h2>
+                    <div className="lineChart">
+                        <ResponsiveContainer width="100%" height={400}>
+                            <LineChart data={trs}>
+                                <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
+                                <XAxis dataKey="dateProd" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
+                                <YAxis yAxisId="left" tickFormatter={toPercent}/>
+                                <Line yAxisId="left" type="monotone" dataKey="trsTot" stroke="#203864" strokeWidth={2}/>
+                                <Line yAxisId="left" type="monotone" dataKey="trsTheoTot" stroke="#882e3d" strokeWidth={2}/>
+                                <Tooltip content={<CustomTooltipTrsTot />} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
             </div>
         </div>
