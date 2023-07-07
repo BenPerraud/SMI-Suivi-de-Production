@@ -6,7 +6,7 @@ function TrsDaily ({productions}) {
     const trsGlobal = (((sumProd-sumWaste)/sumTheorical)*100).toFixed(1)
     
     return (
-        <div className="trsDaily titleH1">TRS de la journée : {trsGlobal}%</div>
+        <div className="trsDaily titleH1">TRS de la journée : {isNaN(trsGlobal) ? "-- " : trsGlobal}%</div>
     )
 }
 
