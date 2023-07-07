@@ -4,6 +4,7 @@ import CustomTooltipWasteTot from "./tooltipWasteTot"
 import CustomTooltipTrsTot from "./tooltipTrsTot"
 import CustomTooltipCadenceTot from "./tooltipCadenceTot"
 import convertDateFormToTime from "../../components/convertDateFormtoTime"
+import formatTrendTot from "../../components/formatTrendTot"
 
 function TrsGlobal () {
     const [trs, setTrs] = useState({})
@@ -16,6 +17,7 @@ function TrsGlobal () {
         const lastDateInput = convertDateFormToTime(document.getElementById("dateEnd").value)
         
         const result = trs.filter(element => element.date >= firstDateInput && element.date <= lastDateInput)
+        formatTrendTot(result)
         setTrs(result)
     }
 
@@ -98,6 +100,7 @@ function TrsGlobal () {
             result.push(objectFormatted)
             result.sort((a, b) => a.date - b.date)
         }
+        formatTrendTot(result)
         setTrsCopy(result)
         return result
     }
@@ -131,7 +134,8 @@ function TrsGlobal () {
                                 <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
                                 <XAxis dataKey="dateProd" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
                                 <YAxis yAxisId="left" tickFormatter={toPercent}/>
-                                <Line yAxisId="left" type="monotone" dataKey="tauxRebutTot" stroke="#203864" strokeWidth={2}/>
+                                <Line yAxisId="left" type="monotone" dataKey="tauxRebutTot" stroke="#203864" strokeWidth={2} dot={false}/>
+                                <Line yAxisId="left" type="monotone" dataKey="taux_de_rebut_trend" connectNulls={true} stroke="#e52fd7" strokeWidth={2} dot={false} />
                                 <Tooltip content={<CustomTooltipWasteTot />} />
                             </LineChart>
                         </ResponsiveContainer>
@@ -145,8 +149,9 @@ function TrsGlobal () {
                                 <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
                                 <XAxis dataKey="dateProd" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
                                 <YAxis yAxisId="left"/>
-                                <Line yAxisId="left" type="monotone" dataKey="cadenceRealTot" stroke="#203864" strokeWidth={2}/>
-                                <Line yAxisId="left" type="monotone" dataKey="cadenceTheoTot" stroke="#882e3d" strokeWidth={2}/>
+                                <Line yAxisId="left" type="monotone" dataKey="cadenceRealTot" stroke="#203864" strokeWidth={2} dot={false}/>
+                                <Line yAxisId="left" type="monotone" dataKey="cadenceTheoTot" stroke="#882e3d" strokeWidth={2} dot={false}/>
+                                <Line yAxisId="left" type="monotone" dataKey="cadence_trend" connectNulls={true} stroke="#e52fd7" strokeWidth={2} dot={false}/>
                                 <Tooltip content={<CustomTooltipCadenceTot />} />
                             </LineChart>
                         </ResponsiveContainer>
@@ -160,8 +165,9 @@ function TrsGlobal () {
                                 <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
                                 <XAxis dataKey="dateProd" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
                                 <YAxis yAxisId="left" tickFormatter={toPercent}/>
-                                <Line yAxisId="left" type="monotone" dataKey="trsTot" stroke="#203864" strokeWidth={2}/>
-                                <Line yAxisId="left" type="monotone" dataKey="trsTheoTot" stroke="#882e3d" strokeWidth={2}/>
+                                <Line yAxisId="left" type="monotone" dataKey="trsTot" stroke="#203864" strokeWidth={2} dot={false}/>
+                                <Line yAxisId="left" type="monotone" dataKey="trsTheoTot" stroke="#882e3d" strokeWidth={2} dot={false}/>
+                                <Line yAxisId="left" type="monotone" dataKey="trs_trend" connectNulls={true} stroke="#e52fd7" strokeWidth={2} dot={false} />
                                 <Tooltip content={<CustomTooltipTrsTot />} />
                             </LineChart>
                         </ResponsiveContainer>

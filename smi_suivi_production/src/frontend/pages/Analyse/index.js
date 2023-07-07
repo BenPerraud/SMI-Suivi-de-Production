@@ -5,6 +5,7 @@ import CustomTooltipCadence from "./tooltipCadence"
 import CustomTooltipWaste from "./tooltipWaste"
 import CustomTooltipTrs from "./tooltipTrs"
 import convertDateFormToTime from "../../components/convertDateFormtoTime"
+import formatTrend from "../../components/formatTrend"
 
 
 function Analyse () {
@@ -19,7 +20,8 @@ function Analyse () {
         const lastDateInput = convertDateFormToTime(document.getElementById("dateEnd").value)
         
         const result = productions.filter(element => element.dateTime >= firstDateInput && element.dateTime <= lastDateInput)
-        setProductions(result)
+        const resultwithtrend = formatTrend(result)
+        setProductions(resultwithtrend)
     }
 
     function reinitiate () {
@@ -83,8 +85,10 @@ function Analyse () {
             }
     
             formattedProd.sort((a, b) => a.dateTime - b.dateTime)
-            setProductionsCopy(formattedProd)
-            return setProductions(formattedProd)
+            const result = formatTrend(formattedProd)
+            setProductionsCopy(result)
+
+            return setProductions(result)
         } catch (err) {
             alert("Le PI renseigné n'existe pas")
             window.location.reload(false)
@@ -135,9 +139,10 @@ function Analyse () {
                                 <YAxis yAxisId="left" tickFormatter={toPercent} />
                                 <YAxis yAxisId="right" orientation="right" hide={true}/>
                                 <XAxis dataKey="date" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
-                                <Line yAxisId="left" type="monotone" dataKey="taux_de_rebut" stroke="#203864" strokeWidth={2}/>
+                                <Line yAxisId="left" type="monotone" dataKey="taux_de_rebut" stroke="#203864" strokeWidth={2} dot={false}/>
                                 <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="opérateur"/>
                                 <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="commentaires"/>
+                                <Line yAxisId="left" type="monotone" dataKey="taux_de_rebut_trend" connectNulls={true} stroke="#e52fd7" strokeWidth={2} dot={false} />
                                 <Tooltip content={<CustomTooltipWaste />}/>
                             </LineChart>
                         </ResponsiveContainer>
@@ -151,8 +156,9 @@ function Analyse () {
                                 <CartesianGrid stroke="#9ba9c6" strokeDasharray="3 3"/>
                                 <YAxis />
                                 <XAxis dataKey="date" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
-                                <Line type="monotone" dataKey="cadenceReelle_heure" stroke="#203864" strokeWidth={2}/>
-                                <Line type="monotone" dataKey="cadenceTheorique_heure" stroke="#882e3d" strokeWidth={2}/>
+                                <Line type="monotone" dataKey="cadenceReelle_heure" stroke="#203864" strokeWidth={2} dot={false}/>
+                                <Line type="monotone" dataKey="cadenceTheorique_heure" stroke="#882e3d" strokeWidth={2} dot={false}/>
+                                <Line type="monotone" dataKey="cadence_trend" connectNulls={true} stroke="#e52fd7" strokeWidth={2} dot={false} />
                                 <Tooltip content={<CustomTooltipCadence />} />
                             </LineChart>
                         </ResponsiveContainer>
@@ -167,11 +173,12 @@ function Analyse () {
                                 <YAxis yAxisId="left" tickFormatter={toPercent} />
                                 <YAxis yAxisId="right" orientation="right" hide={true}/>
                                 <XAxis dataKey="date" tick={{fontSize: 15}} height={65} angle={-45} textAnchor="end" tickSize={12}/>
-                                <Line yAxisId="left" type="monotone" dataKey="trs" stroke="#203864" strokeWidth={2}/>
-                                <Line yAxisId="left" type="monotone" dataKey="trs_max" stroke="#882e3d" strokeWidth={2}/>
-                                <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="cadenceReelle_heure" activeDot={0}/>
-                                <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="cadenceTheorique_heure" activeDot={0}/>
-                                <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="taux_de_rebut" activeDot={0}/>
+                                <Line yAxisId="left" type="monotone" dataKey="trs" stroke="#203864" strokeWidth={2} dot={false}/>
+                                <Line yAxisId="left" type="monotone" dataKey="trs_max" stroke="#882e3d" strokeWidth={2} dot={false}/>
+                                <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="cadenceReelle_heure"/>
+                                <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="cadenceTheorique_heure"/>
+                                <Line yAxisId="right" style={{display: "none"}} type="monotone" dataKey="taux_de_rebut"/>
+                                <Line yAxisId="left" type="monotone" dataKey="trs_trend" connectNulls={true} stroke="#e52fd7" strokeWidth={2} dot={false} />
                                 <Tooltip content={<CustomTooltipTrs />} />
                             </LineChart>
                         </ResponsiveContainer>
