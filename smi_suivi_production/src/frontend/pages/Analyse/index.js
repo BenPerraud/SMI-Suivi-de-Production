@@ -4,11 +4,28 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tool
 import CustomTooltipCadence from "./tooltipCadence"
 import CustomTooltipWaste from "./tooltipWaste"
 import CustomTooltipTrs from "./tooltipTrs"
+import convertDateFormToTime from "../../components/convertDateFormtoTime"
 
 
 function Analyse () {
     const [productions, setProductions] = useState([])
     const [prodDesignation, setProdDesignation] = useState({})
+    const [productionsCopy, setProductionsCopy] = useState ({})
+
+    function getDate (e) {
+        e.preventDefault()
+
+        const firstDateInput = convertDateFormToTime(document.getElementById("dateBegin").value)
+        const lastDateInput = convertDateFormToTime(document.getElementById("dateEnd").value)
+        
+        const result = productions.filter(element => element.dateTime >= firstDateInput && element.dateTime <= lastDateInput)
+        setProductions(result)
+    }
+
+    function reinitiate () {
+        setProductions(productionsCopy)
+        document.getElementById('formDate').reset()
+    }
 
     function formatDatas (x) {
         try {
@@ -42,13 +59,14 @@ function Analyse () {
                     }}
     
                 const date = new Date(i.date)
+                const dateTime = date.getTime()
                 const dateProd = [dateDay(date.getDate()), dateMonth(date.getMonth()), date.getFullYear()-2000].join("/")
                 
                 const arrayOperator = i.operator[0].split(",")
     
                 const newProdObject = {
                     date: dateProd,
-                    dateTime: date,
+                    dateTime: dateTime,
                     qte_produite: i.quantityProd,
                     qte_rebut: i.quantityWaste,
                     qte_validée: i.quantityProd-i.quantityWaste,
@@ -65,6 +83,7 @@ function Analyse () {
             }
     
             formattedProd.sort((a, b) => a.dateTime - b.dateTime)
+            setProductionsCopy(formattedProd)
             return setProductions(formattedProd)
         } catch (err) {
             alert("Le PI renseigné n'existe pas")
@@ -87,8 +106,6 @@ function Analyse () {
     }
 
     const toPercent = (decimal) => `${(decimal).toFixed(1)}%`
-    
-
 
     return (
         <div className="flexColumnGeneral">
@@ -101,6 +118,14 @@ function Analyse () {
             </div>
             <div className={productions.length === 0 ? "closed" : "rowGap20px"}>
                 <h1 className="titleH1">Etape 2 : Analyse du produit {prodDesignation.pi} / {prodDesignation.client} / {prodDesignation.designation}</h1>
+                <div className="formDateFlex">
+                    <form className="formDate" id="formDate" onSubmit={getDate}>
+                        <label>Date de début : <input className="formElement widthDate" type="date" id="dateBegin" /></label>
+                        <label>Date de fin : <input className="formElement widthDate" type="date" id="dateEnd" /></label>
+                        <button className="formBtn" type="submit">Filtrer selon les dates</button>
+                    </form>
+                    <button className="reinitiate" onClick={reinitiate}>Réinitialiser les dates</button>
+                </div>
                 <div className="rowGap15px">
                     <h2 className="titleH2">Taux de rebut</h2>
                     <div className="lineChart">
